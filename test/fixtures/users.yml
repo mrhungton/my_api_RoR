@@ -2,15 +2,15 @@
 
 admin:
   email: admin@freec.test
-  password_digest: 123456
+  password_digest: <%= BCrypt::Password.create('g00d_pa$$') %>
   role: admin
 
 user1:
   email: user1@freec.test
-  password_digest: 123456
+  password_digest: <%= BCrypt::Password.create('g00d_pa$$') %>
   role: user
 
 user2:
   email: user2@freec.test
-  password_digest: 123456
+  password_digest: <%= BCrypt::Password.create('g00d_pa$$') %>
   role: user

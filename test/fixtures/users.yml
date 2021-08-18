@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+admin:
+  email: admin@freec.test
+  password_digest: 123456
+  role: admin
+
+user1:
+  email: user1@freec.test
+  password_digest: 123456
+  role: user
+
+user2:
+  email: user2@freec.test
+  password_digest: 123456
+  role: user

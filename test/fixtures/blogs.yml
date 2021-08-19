@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: Pellentesque lobortis nulla nisl, vitae viverra leo consequat sit amet
+  content: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+  published_date: 2021-08-19 18:46:49
+  user: one
+
+two:
+  title: Morbi a venenatis elit. Mauris tincidunt.
+  content: There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...
+  published_date: 2021-08-19 19:50:49
+  user: two

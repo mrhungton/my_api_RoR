@@ -5,6 +5,8 @@ class User < ApplicationRecord
   # validates :password, presence: true, length: { minimum: 6 }
   validates :password_digest, presence: true
   has_secure_password
+  has_many :blogs, dependent: :destroy
+
 
   # block user
   def block

@@ -10,6 +10,15 @@ Rails.application.routes.draw do
           put '/:id/unblock' => 'users#unblock'
         end
       end
+      resources :blogs, only: [:show, :create, :update, :destroy] do
+        collection do
+          get '/' => 'blogs#list'
+          put '/:id/publish' => 'blogs#publish'
+          put '/:id/unpublish' => 'blogs#unpublish'
+          put '/:id/like' => 'blogs#like'
+          put '/:id/unlike' => 'blogs#unlike'
+        end
+      end
     end
   end
 end

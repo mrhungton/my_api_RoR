@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy, :block, :unblock]
   
   # GET /users
   def list
@@ -35,6 +35,18 @@ class Api::V1::UsersController < ApplicationController
   def destroy
     @user.destroy
     head 204
+  end
+
+  # PUT /users/1
+  def block
+    @user.block
+    render json: @user, status: :ok, messages: 'blocked'
+  end
+
+  # PUT /users/1
+  def unblock
+    @user.unblock
+    render json: @user, status: :ok, messages: 'un-blocked'
   end
 
   private

@@ -6,5 +6,13 @@ class User < ApplicationRecord
   validates :password_digest, presence: true
   has_secure_password
 
+  # block user
+  def block
+    self.update(blocked_at: Time.now)
+  end
 
+  # unblock user
+  def unblock
+    self.update(blocked_at: nil)
+  end
 end

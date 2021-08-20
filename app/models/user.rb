@@ -8,7 +8,19 @@ class User < ApplicationRecord
   has_secure_password
   
   has_many :blogs, dependent: :destroy
-  has_many :likes_blog, dependent: :destroy
+  has_many :likes_blogs, dependent: :destroy
+
+  scope :filter_by_name, lambda { |keyword|
+    where('lower(name) LIKE ?', "%#{keyword.downcase}%")
+  }
+
+  scope :filter_by_email, lambda { |keyword|
+    where('lower(email) LIKE ?', "%#{keyword.downcase}%")
+  }
+
+  scope :recent, lambda { 
+    order(:created_at)
+  }
 
   # block user
   def block

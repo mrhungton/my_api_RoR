@@ -1,16 +1,33 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 admin:
-  email: admin@freec.test
+  email: admin@test.org
   password_digest: <%= BCrypt::Password.create('g00d_pa$$') %>
   role: admin
+  name: Admin FreeC
+  blocked_at: nil
+  created_at: 2021-08-22 18:46:49
 
 user1:
-  email: user1@freec.test
+  email: user1@test.org
   password_digest: <%= BCrypt::Password.create('g00d_pa$$') %>
   role: user
+  name: User1
+  blocked_at: nil
+  created_at: 2021-08-20 18:46:49
 
 user2:
-  email: user2@freec.test
+  email: user2@test.org
   password_digest: <%= BCrypt::Password.create('g00d_pa$$') %>
   role: user
+  name: User2
+  blocked_at: nil
+  created_at: 2021-08-21 18:46:49
+
+another_freec:
+  email: freec@test.org
+  password_digest: <%= BCrypt::Password.create('123456') %>
+  role: admin
+  name: FreeC
+  blocked_at: nil
+  created_at: 2021-08-19 18:46:49

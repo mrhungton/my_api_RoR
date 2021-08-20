@@ -2,7 +2,7 @@ class Blog < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }, uniqueness: true
 
   belongs_to :user
-  has_many :likes_blog, dependent: :destroy
+  has_many :likes_blogs, dependent: :destroy
 
   # publish
   def publish
@@ -16,11 +16,11 @@ class Blog < ApplicationRecord
 
   # like
   def like(user)
-    likes_blog.create(user_id: user.id)
+    likes_blogs.create(user_id: user.id)
   end
 
   # unlike
   def unlike(user)
-    likes_blog.where(user_id: user.id).destroy_all
+    likes_blogs.where(user_id: user.id).destroy_all
   end
 end

@@ -21,21 +21,21 @@ class Api::V1::BlogsControllerTest < ActionDispatch::IntegrationTest
   test "should create blog" do
     assert_difference('Blog.count') do
       post api_v1_blogs_url,
-        params: {blog: {title: "#{@blog.title} (2)", content: @blog.content, published_date: @blog.published_date}},
+        params: {blog: {title: "#{@blog.title} (1)", content: @blog.content, published_date: @blog.published_date}},
         headers: {Authorization: JsonWebToken.encode(user_id: @blog.user_id)},
         as: :json
     end
     assert_response :created
   end
 
-  test "should forbid create blog" do
-    assert_no_difference('Blog.count') do
-      post api_v1_blogs_url,
-        params: {blog: {title: "#{@blog.title} (2)", content: @blog.content, published_date: @blog.published_date}}, 
-        as: :json
-    end
-    assert_response :forbidden
-  end
+  # test "should forbid create blog" do
+  #   assert_no_difference('Blog.count') do
+  #     post api_v1_blogs_url,
+  #       params: {blog: {title: "#{@blog.title} (2)", content: @blog.content, published_date: @blog.published_date}},
+  #       as: :json
+  #   end
+  #   assert_response :forbidden
+  # end
 
   test "should update blog" do
     patch api_v1_blog_url(@blog), 

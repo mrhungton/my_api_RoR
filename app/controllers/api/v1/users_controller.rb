@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
   
   # GET /users
   def list
-    render json: User.all
+    render json: User.search(params)
   end
 
   # GET /users/1

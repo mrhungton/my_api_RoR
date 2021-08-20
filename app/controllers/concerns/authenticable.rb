@@ -11,6 +11,7 @@ module Authenticable
   end
 
   def check_login
-    head :forbidden unless self.current_user
+    # head :forbidden unless self.current_user
+    render json: { error: 'Not Authorized' }, status: 401 unless self.current_user&.blocked_at.nil?
   end
 end

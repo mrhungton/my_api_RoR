@@ -1,6 +1,6 @@
 class Api::V1::BlogsController < ApplicationController
+  before_action :check_login
   before_action :set_blog, only: [:show, :update, :destroy, :publish, :unpublish, :like, :unlike]
-  before_action :check_login, only: [:create]
   # before_action :check_owner, only: [:update, :destroy]
 
   # GET /blogs

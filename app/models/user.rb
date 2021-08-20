@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  validates :name, presence: true, length: { minium: 5, maximum: 50 }
   validates :role, presence: true, inclusion: { in: %w{admin user} }
   validates :email, uniqueness: true
   validates_format_of :email, with: /@/

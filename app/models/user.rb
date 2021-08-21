@@ -3,7 +3,7 @@ class User < ApplicationRecord
   validates :role, presence: true, inclusion: { in: %w{admin user} }
   validates :email, uniqueness: true
   validates_format_of :email, with: /@/
-  # validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }
   validates :password_digest, presence: true
   has_secure_password
   
@@ -17,10 +17,26 @@ class User < ApplicationRecord
   scope :recent, lambda { 
     order(:created_at)
   }
+  
+  scope :not_blocked, lambda {
+    where(blocked_at: nil)
+  }
+
+  scope :blocked, lambda {
+    where('blocked_at is not NULL')
+  }
 
   # seach engine
   def self.search(params={})
     query = params[:user_ids].present? ? User.where(id: params[:user_ids]) : User.all
+
+    # if params[:not_blocked] == true
+    #   query = query.not_blocked
+    # end
+
+    # if params[:blocked] == true
+    #   query = query.blocked
+    # end
 
     if params[:keyword].present?
       query = query.filter_by_keyword(params[:keyword])
@@ -33,9 +49,14 @@ class User < ApplicationRecord
     query
   end
 
+  # user active
+  def active?
+    return blocked_at.nil?
+  end
+
   # block user
   def block
-    self.update(blocked_at: Time.now)
+    self.update(blocked_at: Time.now) if blocked_at.nil?
   end
 
   # unblock user

@@ -1,11 +1,22 @@
 class Api::V1::BlogsController < ApplicationController
+  load_and_authorize_resource class: "Blog"
+
   before_action :check_login
   before_action :set_blog, only: [:show, :update, :destroy, :publish, :unpublish, :like, :unlike]
   # before_action :check_owner, only: [:update, :destroy]
 
   # GET /blogs
   def list
-    render json: Blog.all
+    @blogs = Blog.page(current_page).per(per_page)
+
+    @blogs = @blogs.search(params)
+    
+    # check authorized (user)
+    if can? :list_published, Blog
+      @blogs = @blogs.search(params).published
+    end
+
+    render json: @blogs
   end
 
   # GET /blogs/1

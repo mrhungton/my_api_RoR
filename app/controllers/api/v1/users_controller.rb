@@ -1,10 +1,21 @@
 class Api::V1::UsersController < ApplicationController
+  load_and_authorize_resource class: "User"
+  
   before_action :check_login
   before_action :set_user, only: [:show, :update, :destroy, :block, :unblock]
   
   # GET /users
   def list
-    render json: User.search(params)
+    @users = User.page(current_page).per(per_page)
+
+    @users = @users.search(params)
+    
+    # check authorized (user)
+    if can? :list_not_blocked, User
+      @users = @users.search(params).not_blocked
+    end
+    
+    render json: @users
   end
 
   # GET /users/1
@@ -35,7 +46,7 @@ class Api::V1::UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
-    head 204
+    render json: {messages: 'deleted'}, status: :ok
   end
 
   # PUT /users/1

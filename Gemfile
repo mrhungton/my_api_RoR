@@ -44,3 +44,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "bcrypt", "~> 3.1"
 
 gem "jwt", "~> 2.2"
+
+gem "faker", "~> 2.18"
+
+gem "kaminari", "~> 1.2"
+
+# gem "cancan", "~> 1.6"
+
+gem "cancancan", "~> 3.3"

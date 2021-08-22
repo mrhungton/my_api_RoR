@@ -17,6 +17,7 @@ Rails.application.routes.draw do
           put '/:id/unpublish' => 'blogs#unpublish'
           put '/:id/like' => 'blogs#like'
           put '/:id/unlike' => 'blogs#unlike'
+          get '/featured_list' => 'blogs#featured_list'
         end
       end
     end

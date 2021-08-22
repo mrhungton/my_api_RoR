@@ -12,11 +12,16 @@ class Api::V1::BlogsController < ApplicationController
     @blogs = @blogs.search(params)
     
     # check authorized (user)
-    if can? :list_published, Blog
+    if can? :published_list, Blog
       @blogs = @blogs.search(params).published
     end
 
     render json: @blogs
+  end
+
+  # GET /blogs (featured blogs - with the most likes)
+  def featured_list
+    render json: Blog.published.featured(params[:top]).page(current_page).per(per_page)
   end
 
   # GET /blogs/1
@@ -64,13 +69,13 @@ class Api::V1::BlogsController < ApplicationController
   # PUT /blogs/1/like
   def like
     @blog.like(current_user)
-    render json: @blog, status: :ok, messages: 'liked'
+    render json: { messages: "Liked the post: #{@blog.title} (##{@blog.id})" }, status: :ok
   end
 
   # PUT /blogs/1/unlike
   def unlike
     @blog.unlike(current_user)
-    render json: @blog, status: :ok, messages: 'unliked'
+    render json: { messages: "Un-liked the post: #{@blog.title} (##{@blog.id})" }, status: :ok
   end
 
 

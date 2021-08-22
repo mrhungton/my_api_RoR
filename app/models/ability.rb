@@ -59,17 +59,20 @@ class Ability
     can :unblock, User, {role: 'admin'}
 
     ##### BLOG #####
-    # Users can list all blogs
+    # Admin can list all blogs
     can :list, Blog
 
-    # Users can view a blog
+    # Admin can see featured blogs (list)
+    can :featured_list, Blog
+
+    # Admin can view a blog
     can :show, Blog
     
-    # Users should be able to create a blog
+    # Admin should be able to create a blog
     can :create, Blog
 
     # Only the creator or admin can update blog
-    can :update, Blog, {user_id: current_user.id}
+    can :update, Blog#, {user_id: current_user.id}
 
     # Only the creator or admin can delete blog
     can :update, Blog, {user_id: current_user.id} # current_user is the creator
@@ -78,6 +81,10 @@ class Ability
     # Admin can unpublish blogs
     can :unpublish, Blog
     can :publish, Blog
+  
+    # Admin can like/unlike blogs
+    can :like, Blog
+    can :unlike, Blog
   end
 
   def user_abilities(current_user)
@@ -92,7 +99,10 @@ class Ability
     ##### BLOG #####
     # Users can list all blogs (only published)
     can :list, Blog
-    can :list_published, Blog
+    can :published_list, Blog
+    
+    # User can see featured blogs (list)
+    can :featured_list, Blog
 
     # Users can view a blog
     can :show, Blog
@@ -107,6 +117,10 @@ class Ability
     # Users can unpublished their blog
     can :unpublish, Blog, {user_id: current_user.id}
     can :publish, Blog, {user_id: current_user.id}
+
+    # Users can like/unlike blogs
+    can :like, Blog
+    can :unlike, Blog
   end
 
   # Get rules list

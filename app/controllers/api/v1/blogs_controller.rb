@@ -16,24 +16,39 @@ class Api::V1::BlogsController < ApplicationController
       @blogs = @blogs.search(params).published
     end
 
-    render json: @blogs
+    options = {
+      include: [:user],
+      # links: {
+      #   first: api_v1_blogs_path(page: 1),
+      #   last: api_v1_blogs_path(page: @blogs.total_pages),
+      #   prev: api_v1_blogs_path(page: @blogs.prev_page),
+      #   next: api_v1_blogs_path(page: @blogs.next_page),
+      # }
+    }
+
+    render json: BlogSerializer.new(@blogs, options).serializable_hash
   end
 
   # GET /blogs (featured blogs - with the most likes)
   def featured_list
-    render json: Blog.published.featured(params[:top]).page(current_page).per(per_page)
+    @blogs = Blog.published.featured(params[:top]).page(current_page).per(per_page)
+    
+    options = {include: [:user]}
+    
+    render json: BlogSerializer.new(@blogs, options).serializable_hash
   end
 
   # GET /blogs/1
   def show
-    render json: Blog.find(params[:id])
+    options = {include: [:user]}
+    render json: BlogSerializer.new(@blog, options).serializable_hash
   end
 
   # POST /blogs
   def create
     @blog = current_user.blogs.build(blog_params)
     if @blog.save
-      render json: @blog, status: :created
+      render json: BlogSerializer.new(@blog).serializable_hash, status: :created
     else
       render json: {error: @blog.errors}, status: :unprocessable_entity
     end
@@ -42,7 +57,7 @@ class Api::V1::BlogsController < ApplicationController
   # PUT/PATCH /blogs/1
   def update
     if @blog.update(blog_params)
-      render json: @blog, status: :ok
+      render json: BlogSerializer.new(@blog).serializable_hash, status: :ok
     else
       render json: @blog.errors, status: :unprocessable_entity
     end
@@ -51,19 +66,19 @@ class Api::V1::BlogsController < ApplicationController
   # DELETE /blogs/1
   def destroy
     @blog.destroy
-    head 204
+    render json: {messages: 'Deleted the blog'}, status: :ok
   end
 
   # PUT /blogs/1/publish
   def publish
     @blog.publish
-    render json: @blog, status: :ok, messages: 'published'
+    render json: { messages: "Published the post: #{@blog.title} (##{@blog.id})" }, status: :ok
   end
 
   # PUT /blogs/1/publish
   def unpublish
     @blog.unpublish
-    render json: @blog, status: :ok, messages: 'unpublished'
+    render json: { messages: "Un-published the post: #{@blog.title} (##{@blog.id})" }, status: :ok
   end
 
   # PUT /blogs/1/like

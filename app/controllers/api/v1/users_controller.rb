@@ -15,12 +15,12 @@ class Api::V1::UsersController < ApplicationController
       @users = @users.search(params).not_blocked
     end
     
-    render json: @users
+    render json: UserSerializer.new(@users).serializable_hash
   end
 
   # GET /users/1
   def show
-    render json: @user
+    render json: UserSerializer.new(@user).serializable_hash
   end
 
   # POST /users
@@ -28,7 +28,7 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: @user, status: :created
+      render json: UserSerializer.new(@user).serializable_hash, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class Api::V1::UsersController < ApplicationController
   # PUT/PATCH /users/1
   def update
     if @user.update(user_params)
-      render json: @user, status: :ok
+      render json: UserSerializer.new(@user).serializable_hash, status: :ok
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -46,19 +46,19 @@ class Api::V1::UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
-    render json: {messages: 'deleted'}, status: :ok
+    render json: {messages: 'Deleted the account'}, status: :ok
   end
 
   # PUT /users/1
   def block
     @user.block
-    render json: @user, status: :ok, messages: 'blocked'
+    render json: { messages: "Blocked the account: #{@user.email}" }, status: :ok
   end
 
   # PUT /users/1
   def unblock
     @user.unblock
-    render json: @user, status: :ok, messages: 'un-blocked'
+    render json: { messages: "Unlocked the account: #{@user.email}" }, status: :ok
   end
 
   private

@@ -1,6 +1,4 @@
-# freeC TEST - HUNG NGUYEN TON
-
-This is a test with a description of the functions from freeC.
+# Restful Api TEST - HUNG NGUYEN TON
 
 ## Installation
 * If you don't have Ruby, install it (e.g., by using rvm and when you finish, just run this:

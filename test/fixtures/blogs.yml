@@ -3,23 +3,27 @@
 one:
   title: Ipsum quia dolor sit amet
   content: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+  url: ipsum-quia-dolor-sit-amet
   published_date: 2021-08-19 18:46:49
   user: admin
 
 two:
   title: Morbi a venenatis elit, mauris tincidunt
   content: There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...
+  url: morbi-a-venenatis-elit-mauris-tincidunt
   published_date: 2021-08-19 19:50:49
   user: user1
 
 three:
   title: Simply because it is pain
   content: There is no one who loves pain itself, simply because it is pain. Who seeks after it and wants to have it...
+  url: simply-because-it-is-pain
   published_date: 2021-08-19 19:50:49
   user: user1
 
-another_freec:
-  title: Simply because it is pain freeC
+another_myproject:
+  title: Simply because it is pain myProject
   content: There is no one who loves pain itself, simply because it is pain. Who seeks after it and wants to have it...
+  url: simply-because-it-is-pain-myproject
   published_date: 2021-08-19 19:50:49
   user: user1

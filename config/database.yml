@@ -26,12 +26,12 @@ production:
 
 # development:
 #   <<: *default
-#   database: freec_test
+#   database: myproject_test
 
 # test:
 #   <<: *default
-#   database: freec_test
+#   database: myproject_test
 
 # production:
 #   <<: *default
-#   database: freec_test
+#   database: myproject_test

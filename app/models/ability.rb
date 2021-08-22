@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     # Define abilities for the passed in user here. For example:
     #
-    #   user ||= User.new # guest user (not logged in)
+    user ||= User.new(role: 'user') # guest user (not logged in)
     #   if user.admin?
     #     can :manage, :all
     #   else
@@ -28,7 +28,7 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
-
+    
     send("#{user.role}_abilities", user)
   end
 
@@ -78,6 +78,10 @@ class Ability
     can :update, Blog, {user_id: current_user.id} # current_user is the creator
     can :update, Blog, {user_id: !current_user.id} # current_user is not the creator
 
+    # Admin can delete everyone's posts
+    can :destroy, Blog, {user_id: current_user.id}
+    can :destroy, Blog, {user_id: !current_user.id}
+
     # Admin can unpublish blogs
     can :unpublish, Blog
     can :publish, Blog
@@ -113,6 +117,10 @@ class Ability
     # Only the creator or admin can update blog
     can :update, Blog, {user_id: current_user.id} # current_user is the creator
     cannot :update, Blog, {user_id: !current_user.id} # current_user is not the creator
+
+    # Users can only delete their own posts, but not other people's posts
+    can :destroy, Blog, {user_id: current_user.id}
+    cannot :destroy, Blog, {user_id: !current_user.id}
 
     # Users can unpublished their blog
     can :unpublish, Blog, {user_id: current_user.id}

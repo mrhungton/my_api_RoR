@@ -1,6 +1,6 @@
 class Blog < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }, uniqueness: true
-  validates :url, uniqueness: true
+  validates :url, uniqueness: true, :allow_blank => true
 
   belongs_to :user
   has_many :likes_blogs, dependent: :destroy
